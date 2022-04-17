@@ -1,0 +1,7 @@
+FROM golang:1.17
+
+COPY . /builddir
+WORKDIR /builddir
+RUN go build -o /usr/local/bin/app ./cmd/app/main.go
+EXPOSE 8080
+CMD [ "app" ]

@@ -1,0 +1,26 @@
+version: "3.9"  
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+  app:
+    image: project_app
+    environment:
+      - PROJECT_API_DB_HOST=db
+      - PROJECT_API_DB_PORT=5432
+      - PROJECT_API_DB_USER=postgres
+      - PROJECT_API_DB_PASS=password
+      - PROJECT_API_DB_DBNAME=postgres
+      - PROJECT_API_SERVE_ADDR=:8080
+      - PROJECT_API_CLIENT_ADDR=https://employees-api.vercel.app
+    depends_on:
+      db:
+        condition: service_started
+    restart: always
+    ports:
+      - "8080:8080"
+    links:
+      - db
